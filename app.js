@@ -10,8 +10,12 @@ import index from './routes/index'
 import update from './routes/update'
 import users from './routes/users'
 import deletee from './routes/deletee'
+import fs from 'fs'
 let app = express()
-app.use(logger('dev'));
+app.use(logger({
+  format: 'dev', 
+  stream: fs.createWriteStream('app.log', {'flags': 'w'})
+}));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use('/', index);
