@@ -12,10 +12,10 @@ import users from './routes/users'
 import deletee from './routes/deletee'
 import fs from 'fs'
 let app = express()
-app.use(logger({
-  format: 'dev', 
-  stream: fs.createWriteStream('app.log', {'flags': 'w'})
-}));
+let accessLogStream = fs.createWriteStream(path.join(__dirname, 'server.log'), {flags: 'a'})
+
+// setup the logger
+app.use(logger('combined', {stream: accessLogStream}))
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use('/', index);
